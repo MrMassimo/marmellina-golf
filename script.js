@@ -21,7 +21,7 @@
     BAND_W: 265,               // larghezza zone punteggio
     BAND_START: 470,
     TRAP_PROB: 0.4,
-    MAX_SHOTS: 5,
+    MAX_SHOTS: 3,
     SWING_REST: -6, SWING_BACK: -72, SWING_THRU: 60, SWING_DUR: 340, SWING_CONTACT: 0.86
   };
 
@@ -45,7 +45,7 @@
   var shotOverlay = $("shot-overlay"), shotPoints = $("shot-points"),
       shotLabel = $("shot-label"), shotTotal = $("shot-total"),
       shotNum = $("shot-num"), shotNumMax = $("shot-num-max"), btnNext = $("btn-next");
-  shotNumMax.textContent = 5;
+  shotNumMax.textContent = CFG.MAX_SHOTS;
   var endBg = $("end-bg"), endTitle = $("end-title"),
       endPcVal = $("end-pc-value"), endSub = $("end-sub");
 
