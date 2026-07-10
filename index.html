@@ -1,0 +1,100 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Marmellina — Oktoberfest Golf</title>
+<link rel="stylesheet" href="style.css">
+
+<div id="app">
+  <div id="stage">
+
+    <!-- ============ INTRO ============ -->
+    <section id="screen-intro" class="screen is-active">
+      <div class="intro-slide" data-slide="0" style="background-image:url('assets/intro-1.png')"></div>
+      <div class="intro-slide" data-slide="1" style="background-image:url('assets/intro-2.png')"></div>
+      <div class="intro-slide" data-slide="2" style="background-image:url('assets/intro-3.png')"></div>
+      <div id="intro-caption" class="intro-caption"></div>
+      <button id="btn-skip" class="btn-skip">salta ▸</button>
+    </section>
+
+    <!-- ============ MENU ============ -->
+    <section id="screen-menu" class="screen" style="background-image:url('assets/bg-menu.png')">
+      <img id="menu-logo" src="assets/logo.png" alt="Marmellina Oktoberfest Golf">
+      <button id="btn-play" class="btn-play">
+        <img src="assets/btn-play.png" alt="">
+        <span>AVVIA GIOCO</span>
+      </button>
+      <p class="menu-hint">Marmellino ti sfida… prendi la mira e colpisci la palla di legno!</p>
+    </section>
+
+    <!-- ============ GIOCO ============ -->
+    <section id="screen-game" class="screen">
+      <div id="camera">
+        <div class="layer sky"></div>
+        <div class="layer tents"></div>
+        <div id="world" class="layer world">
+          <div id="ground"></div>
+          <div id="zones"></div>
+          <div id="player">
+            <img id="body" src="assets/body.png" alt="">
+            <img id="arm" src="assets/arm.png" alt="">
+          </div>
+          <img id="ball" src="assets/ball.png" alt="">
+        </div>
+      </div>
+
+      <!-- HUD -->
+      <div id="hud">
+        <div class="hud-shots">Tiro <span id="hud-shot">1</span>/<span id="hud-max">5</span></div>
+        <div id="hud-dist" class="hud-dist"></div>
+      </div>
+
+      <!-- Meter DIREZIONE -->
+      <div id="meter-dir" class="meter">
+        <div class="meter-label">DIREZIONE</div>
+        <div class="dial-wrap">
+          <img class="dial" src="assets/dir-dial.png" alt="">
+          <div id="needle" class="needle"></div>
+        </div>
+      </div>
+
+      <!-- Meter FORZA -->
+      <div id="meter-force" class="meter">
+        <div class="meter-label">FORZA</div>
+        <div class="force-wrap">
+          <img class="force-frame" src="assets/force-frame.png" alt="">
+          <div class="force-track"><div id="force-fill"></div></div>
+        </div>
+      </div>
+
+      <div id="prompt" class="prompt"></div>
+
+      <!-- Risultato del singolo tiro (pieno schermo) -->
+      <div id="shot-overlay" class="shot-overlay">
+        <div class="shot-card">
+          <div class="shot-kicker">Tiro <span id="shot-num">1</span>/<span id="shot-num-max">5</span></div>
+          <div id="shot-points" class="shot-points">+0</div>
+          <div id="shot-label" class="shot-label">PUNTI</div>
+          <div id="shot-total" class="shot-total">Totale: 0 PC</div>
+          <button id="btn-next" class="btn-again">RIGIOCA</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FINE ============ -->
+    <section id="screen-end" class="screen">
+      <div id="end-bg" class="end-bg"></div>
+      <div class="end-panel">
+        <h1 id="end-title">FINE PARTITA</h1>
+        <div class="end-pc">
+          <img src="assets/coin-pc.png" alt="PC">
+          <span id="end-pc-value">+0</span>
+          <small>Punti Cattura</small>
+        </div>
+        <p id="end-sub"></p>
+        <button id="btn-again" class="btn-again">GIOCA ANCORA</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="script.js"></script>

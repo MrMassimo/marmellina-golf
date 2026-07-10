@@ -1,0 +1,181 @@
+/* ===== Marmellina — Oktoberfest Golf ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --wood:#6b3f22; --wood-dark:#43260f; --cream:#f4e6c8;
+  --gold:#f2b705; --green:#3a8a2e;
+}
+html,body{height:100%;background:#1a120b;overflow:hidden;
+  font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  -webkit-user-select:none;user-select:none;touch-action:manipulation}
+
+#app{position:fixed;inset:0;overflow:hidden;background:#0b0805}
+#stage{position:absolute;left:50%;top:50%;width:960px;height:540px;overflow:hidden;
+  transform-origin:center center;transform:translate(-50%,-50%);background:#8ec7e8}
+
+/* ---- screens ---- */
+.screen{position:absolute;inset:0;display:none;background-size:cover;background-position:center}
+.screen.is-active{display:block}
+
+/* ============ INTRO ============ */
+.intro-slide{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity .8s ease;transform:scale(1.06);animation:kb 6s ease-out forwards}
+.intro-slide.show{opacity:1}
+@keyframes kb{from{transform:scale(1.12)}to{transform:scale(1.0)}}
+.intro-caption{position:absolute;left:0;right:0;bottom:34px;text-align:center;
+  color:#fff;font-size:26px;font-weight:bold;text-shadow:0 3px 10px #000,0 0 4px #000;
+  opacity:0;transition:opacity .5s;padding:0 40px}
+.intro-caption.show{opacity:1}
+.tonfo{position:absolute;top:38%;left:50%;transform:translate(-50%,-50%) rotate(-8deg) scale(0);
+  font-size:80px;font-weight:900;color:#ffd23f;-webkit-text-stroke:5px #7a2e00;
+  text-shadow:0 8px 0 #7a2e00;opacity:0;letter-spacing:2px}
+.tonfo.pop{animation:tonfo .7s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes tonfo{0%{transform:translate(-50%,-50%) rotate(-8deg) scale(0);opacity:0}
+  40%{opacity:1}60%{transform:translate(-50%,-50%) rotate(-8deg) scale(1.15)}
+  100%{transform:translate(-50%,-50%) rotate(-8deg) scale(1);opacity:1}}
+.btn-skip{position:absolute;right:16px;bottom:14px;z-index:5;
+  background:rgba(0,0,0,.45);color:#fff;border:0;border-radius:20px;
+  padding:8px 16px;font-size:14px;cursor:pointer;backdrop-filter:blur(3px)}
+.btn-skip:hover{background:rgba(0,0,0,.65)}
+
+/* ============ MENU ============ */
+#screen-menu{background-image:url('assets/bg-menu.png')}
+#menu-logo{position:absolute;top:22px;left:50%;transform:translateX(-50%);
+  width:min(560px,72%);filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));
+  animation:logoIn .7s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes logoIn{from{transform:translateX(-50%) translateY(-30px) scale(.8);opacity:0}
+  to{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}
+.btn-play{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);
+  border:0;background:none;cursor:pointer;width:300px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45));
+  transition:transform .12s}
+.btn-play img{width:100%;display:block}
+.btn-play span{position:absolute;left:0;right:0;top:57%;transform:translateY(-50%);
+  text-align:center;color:#3a2410;font-weight:900;font-size:24px;letter-spacing:1px;
+  text-shadow:0 2px 0 rgba(255,255,255,.35)}
+.btn-play:hover{transform:translateX(-50%) scale(1.05)}
+.btn-play:active{transform:translateX(-50%) scale(.97)}
+.btn-play{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
+  50%{filter:drop-shadow(0 8px 22px rgba(242,183,5,.75))}}
+.menu-hint{position:absolute;left:0;right:0;bottom:20px;text-align:center;color:#fff;
+  font-size:14px;text-shadow:0 2px 6px #000;opacity:.9}
+
+/* ============ GIOCO ============ */
+#camera{position:absolute;inset:0;overflow:hidden}
+.layer{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform,background-position}
+.sky{background:linear-gradient(#8ec7e8,#cfe9f5 62%,#e8f6d8);height:340px;
+  background-image:url('assets/sky.png');background-repeat:repeat-x;
+  background-size:auto 340px;background-position:left bottom}
+.tents{top:196px;height:170px;background-image:url('assets/tents.png');
+  background-repeat:repeat-x;background-size:auto 170px;background-position:left bottom}
+.world{width:100%;height:100%}
+#ground{position:absolute;left:0;top:300px;width:100%;height:240px;
+  background-image:url('assets/ground.png');background-repeat:repeat-x;
+  background-size:auto 300px;background-position:center bottom}
+
+/* player */
+#player{position:absolute;bottom:145px;height:190px;z-index:6}
+#body{height:190px;display:block}
+#arm{position:absolute;height:92px;left:6px;top:40px;transform-origin:30% 22%;
+  transform:rotate(-6deg);z-index:7}
+
+/* ball */
+#ball{position:absolute;width:30px;height:30px;z-index:8;left:0;top:0;
+  filter:drop-shadow(0 4px 4px rgba(0,0,0,.35))}
+
+/* zones */
+.zone{position:absolute;bottom:140px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.zone img{display:block;height:120px;width:auto;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}
+.zone.neg img{height:96px}
+.zone .val{position:absolute;top:8px;font-weight:900;font-size:30px;
+  color:#fff;-webkit-text-stroke:4px #2b1a0a;paint-order:stroke;text-shadow:0 3px 0 #2b1a0a}
+.zone.pos .val{color:#fff8d8}
+.zone.neg .val{top:auto;bottom:24px;color:#ffd9d0}
+.zone.hit img{animation:zbounce .5s ease}
+@keyframes zbounce{0%{transform:translateY(0)}30%{transform:translateY(-14px)}100%{transform:translateY(0)}}
+
+/* ---- HUD ---- */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:10}
+.hud-shots{position:absolute;top:16px;left:16px;background:rgba(43,26,10,.8);color:#f4e6c8;
+  padding:6px 14px;border-radius:16px;font-weight:bold;font-size:16px}
+.hud-dist{position:absolute;top:18px;right:16px;color:#fff;font-weight:bold;font-size:16px;
+  background:rgba(43,26,10,.55);padding:5px 12px;border-radius:14px;
+  text-shadow:0 2px 4px #000;text-align:right}
+
+/* ---- meters ---- */
+.meter{position:absolute;bottom:14px;z-index:12;text-align:center;padding:6px 10px 8px;
+  background:rgba(30,18,8,.42);border-radius:16px;backdrop-filter:blur(2px);
+  transition:opacity .25s, transform .25s;pointer-events:none}
+.meter.off{opacity:.28;transform:scale(.9)}
+.meter.active{opacity:1}
+.meter-label{color:#fff;font-weight:900;letter-spacing:2px;font-size:13px;
+  margin-bottom:2px;text-shadow:0 2px 4px #000}
+#meter-dir{left:16px}
+.dial-wrap{position:relative;width:200px;height:110px}
+.dial{width:200px;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
+.needle{position:absolute;left:50%;bottom:14px;width:6px;height:78px;border-radius:4px;
+  background:linear-gradient(#ff3b30,#b3160d);transform-origin:50% 100%;
+  transform:translateX(-50%) rotate(0deg);box-shadow:0 0 6px rgba(255,59,48,.8)}
+.needle::after{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:14px solid #ff3b30}
+
+#meter-force{right:16px}
+.force-wrap{position:relative;width:120px;height:210px}
+.force-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
+.force-track{position:absolute;left:29%;top:13%;width:34%;height:73%;z-index:2;
+  display:flex;align-items:flex-end;overflow:hidden;border-radius:6px;
+  background:#241006;border:2px solid #2b1a0a;box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
+#force-fill{width:100%;height:0%;border-radius:4px;
+  background:linear-gradient(#2ecc40,#ffdc00 55%,#ff4136)}
+
+/* ---- risultato singolo tiro (pieno schermo) ---- */
+.shot-overlay{position:absolute;inset:0;z-index:20;display:none;
+  align-items:center;justify-content:center;background:rgba(20,12,5,.66);backdrop-filter:blur(3px)}
+.shot-overlay.show{display:flex}
+.shot-card{text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;
+  animation:cardin .35s cubic-bezier(.2,1.5,.4,1)}
+@keyframes cardin{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.shot-kicker{font-size:20px;font-weight:bold;letter-spacing:2px;opacity:.85;
+  background:rgba(43,26,10,.7);padding:4px 16px;border-radius:14px;margin-bottom:6px}
+.shot-points{font-size:130px;font-weight:900;line-height:1;
+  -webkit-text-stroke:7px #2b1a0a;paint-order:stroke;text-shadow:0 10px 0 #2b1a0a}
+.shot-points.good{color:#7cff5a}.shot-points.bad{color:#ff5a5a}.shot-points.zero{color:#ffd23f}
+.shot-label{font-size:36px;font-weight:900;letter-spacing:4px;text-shadow:0 3px 8px #000}
+.shot-total{font-size:24px;opacity:.92;margin-top:8px;text-shadow:0 2px 6px #000}
+.shot-overlay .btn-again{margin-top:20px}
+
+.prompt{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);z-index:13;
+  color:#fff;font-weight:900;font-size:20px;text-shadow:0 3px 8px #000;text-align:center;
+  pointer-events:none;transition:opacity .2s}
+.prompt.blink{animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.35}}
+
+/* ============ FINE ============ */
+#screen-end{background:#2b1a0a}
+.end-bg{position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:brightness(.65)}
+.end-panel{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;text-align:center;color:#fff}
+#end-title{font-size:46px;font-weight:900;letter-spacing:1px;
+  -webkit-text-stroke:2px #2b1a0a;text-shadow:0 4px 0 #2b1a0a}
+.end-pc{display:flex;align-items:center;gap:12px;background:rgba(43,26,10,.75);
+  padding:14px 28px;border-radius:20px;border:3px solid var(--gold)}
+.end-pc img{width:60px;height:60px}
+.end-pc span{font-size:52px;font-weight:900;color:var(--gold)}
+.end-pc small{align-self:flex-end;padding-bottom:12px;font-size:15px;opacity:.85}
+#end-sub{font-size:19px;max-width:70%;text-shadow:0 2px 6px #000}
+.btn-again{margin-top:8px;background:var(--gold);color:#3a2410;border:0;border-radius:24px;
+  padding:14px 34px;font-size:22px;font-weight:900;cursor:pointer;
+  box-shadow:0 6px 0 #b98a04;transition:transform .1s}
+.btn-again:hover{transform:translateY(-2px)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 #b98a04}
+
+/* fx: flying score popup */
+.fx-pop{position:absolute;z-index:14;font-weight:900;font-size:40px;
+  -webkit-text-stroke:4px #2b1a0a;paint-order:stroke;pointer-events:none;
+  animation:fxpop 1.2s ease-out forwards}
+.fx-pop.good{color:#7cff5a}.fx-pop.bad{color:#ff5a5a}
+@keyframes fxpop{0%{transform:translate(-50%,0) scale(.4);opacity:0}
+  20%{opacity:1;transform:translate(-50%,-10px) scale(1.1)}
+  100%{transform:translate(-50%,-70px) scale(1);opacity:0}}
